@@ -235,30 +235,31 @@ def work_with_regions(regions):
         multi_diff_S += biggest_diff**2
             
         # Будуємо графіки
-        plt.subplot(number_of_regions+1, 2, 2*i+1)
+        plt.subplot(2, number_of_regions+1, i+1)
         plt.plot(Number, S, linestyle='-', linewidth=1, marker='s', markersize=5, color='k', label='Відгук')
         plt.plot(Number, S_smooth, linestyle='-', linewidth=1, marker='o', markersize=5, color='r', label='Smooth')
         plt.title(f'Область №{i+1}$, x={x}$, $y={y}$')
-        #plt.xlabel('Час, відносні одиниці')
+        plt.xlabel('Час, відносні одиниці')
         plt.legend()
 
-        plt.subplot(number_of_regions+1, 2, 2*i+2)
+        plt.subplot(2, number_of_regions+1, number_of_regions+1 + i+1)
         plt.plot(Number, Rcos,  linestyle='-', linewidth=1, marker='s', markersize=5, color='r', label='R')
         plt.plot(Number, Gcos,  linestyle='-', linewidth=1, marker='o', markersize=5, color='g', label='G')
         plt.plot(Number, Bcos,  linestyle='-', linewidth=1, marker='^', markersize=5, color='b', label='B')
-        #plt.xlabel('Час, відносні одиниці')
+        plt.xlabel('Час, відносні одиниці')
         plt.legend()
 
     # Графік Мульти-відгуку
     if number_of_regions > 1:
-        plt.subplot(number_of_regions+1, 2, 2*number_of_regions + 1)
+        plt.subplot(2, number_of_regions+1, number_of_regions + 1)
 
         multi_diff_S = np.sqrt(multi_diff_S)
             
         plt.plot(Number, multi_diff_S, linestyle='-', linewidth=1, marker='s', markersize=5, color='k', label='Відгук')
-        #plt.plot(Number, S_smooth, linestyle='-', linewidth=1, marker='o', markersize=5, color='r', label='Згладжений відгук')
+        plt.plot(Number, smooth_fft(Number, multi_diff_S, order=npts), linestyle='-', linewidth=1, marker='o', markersize=5, color='r', label='Smooth')
         plt.title(f'Мульти-відгук')
-        #plt.xlabel('Час, відносні одиниці')
+        plt.xlabel('Час, відносні одиниці')
+        plt.legend()
         
     plt.tight_layout()
     plt.show()
